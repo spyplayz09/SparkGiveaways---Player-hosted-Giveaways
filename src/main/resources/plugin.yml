@@ -1,0 +1,20 @@
+name: SparkGiveaways
+version: 1.0.0
+main: me.sparkgiveaways.SparkGiveaways
+api-version: '1.21'
+
+author: SparkOP
+description: A highly customized player-hosted giveaway plugin.
+
+commands:
+  giveaways:
+    description: Open the public giveaways menu
+    usage: /giveaways
+    aliases:
+      - giveaway
+      - gws
+
+permissions:
+  sparkgiveaways.use:
+    description: Allows the player to use SparkGiveaways
+    default: true
