@@ -1,31 +1,34 @@
 package me.sparkgiveaways;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class SparkGiveaways extends JavaPlugin {
+public final class SparkGiveaways extends JavaPlugin implements TabExecutor {
 
     private static SparkGiveaways instance;
-    private GiveawayGUI giveawayGUI;
 
     @Override
     public void onEnable() {
-
         instance = this;
 
-        giveawayGUI = new GiveawayGUI(this);
+        getCommand("giveaways").setExecutor(this);
+        getCommand("giveaways").setTabCompleter(this);
 
-        getLogger().info("================================");
-        getLogger().info("      SparkGiveaways v1.0");
-        getLogger().info("      Plugin Enabled!");
-        getLogger().info("================================");
+        getLogger().info("SparkGiveaways has been enabled!");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("SparkGiveaways disabled!");
+        getLogger().info("SparkGiveaways has been disabled!");
+    }
+
+    public static SparkGiveaways getInstance() {
+        return instance;
     }
 
     @Override
@@ -36,21 +39,24 @@ public class SparkGiveaways extends JavaPlugin {
             String[] args
     ) {
 
-        if (command.getName().equalsIgnoreCase("giveaways")) {
-
-            if (!(sender instanceof Player player)) {
-                sender.sendMessage("Only players can use this command.");
-                return true;
-            }
-
-            giveawayGUI.open(player);
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage("This command can only be used by a player.");
             return true;
         }
 
-        return false;
+        if (args.length == 0) {
+            openGiveawaysMenu(player);
+            return true;
+        }
+
+        return true;
     }
 
-    public static SparkGiveaways getInstance() {
-        return instance;
+    private void openGiveawaysMenu(Player player) {
+        player.sendMessage(
+                ChatColor.GOLD + "Opening SparkGiveaways..."
+        );
+
+        // GUI will be added next.
     }
 }
